@@ -30,9 +30,6 @@ export class Sale extends React.Component {
         this.getProductData = this.getProductData.bind(this);
         this.getStoreData = this.getStoreData.bind(this);
         this.addSale = this.addSale.bind(this);
-        // this.updateStore = this.updateStore.bind(this);
-        // this.deleteStore = this.deleteStore.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
         this.initEditForm = this.initEditForm.bind(this);
     }
 
