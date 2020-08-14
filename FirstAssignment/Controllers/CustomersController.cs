@@ -12,6 +12,7 @@ namespace FirstAssignment.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
+
     {
         private readonly AssignmentDBContext _context;
 
@@ -29,6 +30,8 @@ namespace FirstAssignment.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
+
+        // Changed the code..
         public async Task<ActionResult<Customers>> GetCustomers(int id)
         {
             var customers = await _context.Customers.FindAsync(id);
