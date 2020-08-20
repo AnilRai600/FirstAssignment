@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Modal, Header, Container, Segment, Icon, Form, Table, Label, Pagination, Confirm } from 'semantic-ui-react';
+import React, { Fragment } from 'react';
+import { Button, Modal, Icon, Form, Table, Label,  Confirm } from 'semantic-ui-react';
 import axios from 'axios';
 
 
@@ -170,7 +170,7 @@ export class Product extends React.Component {
     render = () => {
 
         let productList = this.state.productList;
-        {console.log(this.state.productList);}
+        
           return (
             <Fragment>
                 <div className="Menubar" style={{ marginTop: "50px"}}>

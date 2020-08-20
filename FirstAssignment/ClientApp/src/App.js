@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
-import { Layout } from './trycomponents/Layout';
-import { Home } from './trycomponents/Home';
-import { Customer } from './trycomponents/Customer';
-import { Product } from './trycomponents/Product';
-import { Store } from './trycomponents/Store';
-import { Sale } from './trycomponents/Sale';
+import { Layout } from './components/Layout';
+import { Home } from './components/Home';
+import { Customer } from './components/Customer';
+import { Product } from './components/Product';
+import { Store } from './components/Store';
+import { Sale } from './components/Sale';
 
 //import { FetchData } from './components/FetchData';
 //import { Counter } from './components/Counter';
