@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Modal, Dropdown, Icon, Form, Table, Label, Pagination, Confirm } from 'semantic-ui-react';
+import React, { Fragment } from 'react';
+import { Button, Modal, Dropdown, Icon, Form, Table, Label, Confirm } from 'semantic-ui-react';
 import axios from 'axios';
+import moment from 'moment';
 
 
 
@@ -30,10 +31,8 @@ export class Sale extends React.Component {
         this.getProductData = this.getProductData.bind(this);
         this.getStoreData = this.getStoreData.bind(this);
         this.addSale = this.addSale.bind(this);
-        // this.updateStore = this.updateStore.bind(this);
-        // this.deleteStore = this.deleteStore.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
         this.initEditForm = this.initEditForm.bind(this);
+        this.updateSale = this.updateSale.bind(this);
     }
 
     componentDidMount() {
@@ -154,7 +153,7 @@ export class Sale extends React.Component {
     }
 
 
-    updateSale = async () => {
+    updateSale() {
         
         const salesToUpdate = {
             id: this.state.id,
@@ -165,36 +164,45 @@ export class Sale extends React.Component {
         };
         console.log(salesToUpdate);
 
-        await axios.put('api/Sales/' + this.state.id, salesToUpdate)
+         axios.put('api/Sales/' + this.state.id, salesToUpdate)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                let saleList = this.state.saleList;
-                const updatedSaleList = saleList.map(sale => {
-                    if (sale.id === this.state.id) {
-                        sale.customer.name = this.state.selectedCustomer.name
-                        sale.product.name = this.state.selectedProduct.name
-                        sale.store.name = this.state.selectedStore.name
-                        sale.dateSold = this.state.date
+                let saleListNew = this.state.saleList.slice();
+
+                let newSales = [];
+
+               this.setState({saleList: [], editSaleModal: false})
+
+               console.log(this.state.saleList);
+               let self = this;
+               
+                 saleListNew.forEach( function (sale, index) {
+                    if (sale.id === self.state.id) {
+                        console.log('before value update');
+                        console.log(saleListNew[index]);
+                        saleListNew[index]['customerId'] = self.state.selectedCustomer
+                        saleListNew[index]['productId'] = self.state.selectedProduct
+                        saleListNew[index]['storeId'] = self.state.selectedStore
+                        saleListNew[index]['dateSold'] = self.state.date
+                        
+                        console.log('After value upadte');
+                        console.log(saleListNew[index]);
+
+
                     }
-                    return sale;
+                   // newSales.push(saleListNew[index]);
+                   // console.log(saleListNew[index]);
                 })
-                
-
-                
-
+               
+               
+                console.log(saleListNew);
+              
                 this.setState({
-                    id: this.state.id,
-                    customer: this.state.selectedCustomer.name,
-                    product: this.state.selectedProduct.name,
-                    store: this.state.selectedStore.name,
-                    dateSold: this.state.date,
-                    editSaleModal: false,
-                    saleList: updatedSaleList
+                    saleList: saleListNew
                 });
-
             })
-            .catch((error) => console.log(error.response.request._response));
+            .catch((error) => console.log(error));
     }
 
     initEditForm(sale) {
@@ -330,7 +338,7 @@ export class Sale extends React.Component {
                                     <Table.Cell>{sale.customer.name}</Table.Cell>
                                     <Table.Cell>{sale.product.name}</Table.Cell>
                                     <Table.Cell>{sale.store.name}</Table.Cell>
-                                    <Table.Cell>{sale.dateSold}</Table.Cell>
+                                    <Table.Cell>{moment(sale.dateSold).format("MMM Do YYYY")}</Table.Cell>
                                     <Table.Cell>
                                     <Button
                                         onClick={() => this.initEditForm(sale)}
